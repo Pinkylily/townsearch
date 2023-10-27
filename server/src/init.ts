@@ -1,12 +1,23 @@
 import { TownController } from "./controllers/townController";
-import { TownDao } from "./dao/townDao";
+import { TownRepository } from "./repository/townRepository";
 import { TownModel } from "./models/townModel";
 import { TownRouter } from "./routes/townRouter";
+import { DataAccess } from "./service/dataAccess";
+import { PostalCodeService } from "./service/postalCodeService";
+import { TownValidator } from "./utils/validator/townValidator";
 
-const townDao = new TownDao();
+const dataAccess = new DataAccess();
 
-const townModel = new TownModel({ townDao });
+const townDao = new TownRepository({ dataAccess });
 
-const townController = new TownController({ townModel });
+const postalCodeService = new PostalCodeService();
+
+const townModel = new TownModel({ townDao, postalCodeService });
+
+townModel.initializedData();
+
+const townValidator = new TownValidator();
+
+const townController = new TownController({ townModel, townValidator });
 
 export const townRouter = new TownRouter({ townController });

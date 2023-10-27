@@ -13,11 +13,10 @@ export class TownRouter {
     this.townController = deps.townController;
     this.router = express.Router();
 
-
     this.initRoutes();
   }
 
   private initRoutes() {
-    this.router.get("/", this.townController.getHome);
+    this.router.get("/towns", this.townController.findTownsCategoriesByName);
   }
 }

@@ -1,5 +1,0 @@
-export class TownDao {
-    constructor() {
-
-    }
-}
