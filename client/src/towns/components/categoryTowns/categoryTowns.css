@@ -1,0 +1,29 @@
+.categoryTowns {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #d2e5e9;
+  border-radius: 10px;
+  margin: 30px 30px;
+  flex: 1 1 0;
+  padding: 35px;
+}
+
+.categoryTowns__title {
+  display: flex;
+  color: #000;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 37px;
+  letter-spacing: 0em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.categoryTowns__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}

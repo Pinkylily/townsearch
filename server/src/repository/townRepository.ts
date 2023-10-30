@@ -64,7 +64,7 @@ export class TownRepository {
       const query = {
         $or: [
           { nomCommune: { $regex: search, $options: "i" } },
-          { codePostal: { $regex: search } },
+          { codePostal: { $regex: `^${search}` } },
         ],
       };
 
