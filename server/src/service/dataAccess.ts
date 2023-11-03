@@ -1,26 +1,23 @@
-import { Db, MongoClient } from "mongodb";
-import config from "../config/config";
+import { Database, verbose } from "sqlite3";
+import path from "path";
 
 export class DataAccess {
-  private client: MongoClient | undefined;
-
+  private database: Database | undefined;
   constructor() {}
 
-  public async connectToMongoDB(): Promise<Db | undefined> {
-    const uri = config.default("databaseUri");
-    this.client = new MongoClient(uri);
+  public async connect(): Promise<Database> {
+    const sqlite3 = verbose();
+    const db_name = path.join(process.cwd(), "data", "town.db");
 
-    try {
-      await this.client.connect();
-      const database = this.client.db("townSearch");
-
-      return database;
-    } catch (error) {
-      console.error("Error connecting to MongoDB:", error);
-    }
+    this.database = new sqlite3.Database(db_name, (err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+    });
+    return this.database;
   }
 
   public async close() {
-    return this.client?.close();
+    this.database?.close();
   }
 }

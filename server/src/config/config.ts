@@ -12,11 +12,6 @@ export default convict({
     format: String,
     default: "https://unpkg.com/codes-postaux@4.0.0/codes-postaux.json",
   },
-  databaseUri: {
-    doc: "uri to database",
-    format: String,
-    default: "mongodb://localhost:27017",
-  },
   limitTownList: {
     doc: "limitation to number of element on town list",
     format: Number,

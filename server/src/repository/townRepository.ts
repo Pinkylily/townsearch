@@ -1,4 +1,3 @@
-import { Collection } from "mongodb";
 import { DataAccess } from "../service/dataAccess";
 import { ITown } from "../types/townTypes";
 import config from "../config/config";
@@ -9,92 +8,94 @@ interface ITownRepositoryDependencies {
 }
 
 export class TownRepository {
-  private readonly COLLECTION_NAME = "towns";
   private readonly dataAccess: DataAccess;
-  private townsCollection: Collection<ITown> | undefined;
 
   constructor(deps: ITownRepositoryDependencies) {
     this.dataAccess = deps.dataAccess;
   }
 
-  private async getCollection(): Promise<Collection<ITown>> {
-    if (this.townsCollection) {
-      return this.townsCollection;
-    }
-
-    const dbConnection = await this.dataAccess.connectToMongoDB();
-
-    if (!dbConnection) {
-      throw new Error("Cannot connect to database");
-    }
-
-    this.townsCollection = dbConnection.collection(this.COLLECTION_NAME);
-
-    return this.townsCollection;
-  }
-
   private async close() {
-    this.townsCollection = undefined;
     await this.dataAccess.close();
   }
 
-  private async hasDataAlreadyInCollection(): Promise<boolean> {
-    const townsCollection = await this.getCollection();
-    const count = await townsCollection.estimatedDocumentCount();
-    return count > 0;
+  public async createTable(): Promise<void> {
+    try {
+      const queryCreate = `CREATE TABLE IF NOT EXISTS Towns (
+        TOWN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        codePostal VARCHAR(10) NOT NULL,
+        codeCommune VARCHAR(100) NOT NULL,
+        nomCommune VARCHAR(100) NOT NULL,
+        libelleAcheminement VARCHAR(100) NOT NULL
+      );`;
+
+      const db = await this.dataAccess.connect();
+      db.run(queryCreate, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+    } finally {
+      this.close();
+    }
   }
 
   public async createAllTowns(towns: ITown[]): Promise<void> {
     try {
-      const hasDataAlreadyInCollection =
-        await this.hasDataAlreadyInCollection();
+      const queryInsert = `INSERT INTO Towns (codePostal, codeCommune, nomCommune, libelleAcheminement ) VALUES ${towns.map(
+        ({ codePostal, codeCommune, nomCommune, libelleAcheminement }) =>
+          `("${codePostal}", "${codeCommune}", "${nomCommune}", "${libelleAcheminement}")`
+      )}`;
 
-      if (hasDataAlreadyInCollection) return;
-
-      const townsCollection = await this.getCollection();
-
-      await townsCollection.insertMany(towns);
+      const db = await this.dataAccess.connect();
+      db.run(queryInsert, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
     } finally {
       this.close();
     }
   }
 
   public async findTownsByNameOrPostalCode(search: string): Promise<ITown[]> {
-    try {
-      const query = {
-        $or: [
-          { nomCommune: { $regex: search, $options: "i" } },
-          { codePostal: { $regex: `^${search}` } },
-        ],
-      };
+    const db = await this.dataAccess.connect();
 
-      const townsCollection = await this.getCollection();
+    const query = `
+            SELECT * FROM Towns
+            WHERE nomCommune LIKE '%' || ? || '%' OR codePostal LIKE ? || '%'
+            LIMIT ?
+            ORDER BY nomCommune`;
 
-      const towns = await townsCollection
-        .find(query)
-        .limit(config.get("limitTownList"))
-        .toArray();
-      const townsWithoutId = towns.map(TownMapper.mapTownDaoToTown);
-
-      return townsWithoutId;
-    } finally {
-      this.close();
-    }
+    return new Promise<ITown[]>((resolve, reject) => {
+      db.all<ITown>(
+        query,
+        [search, search, config.get("limitTownList")],
+        (err, rows) => {
+          this.close();
+          if (err) {
+            reject(err);
+          } else {
+            resolve(rows.map(TownMapper.mapTownDaoToTown));
+          }
+        }
+      );
+    });
   }
 
   public async getAllTowns(): Promise<ITown[]> {
-    try {
-      const townsCollection = await this.getCollection();
+    const query = "SELECT * FROM Towns ORDER BY nomCommune";
 
-      const towns = await townsCollection
-        .find({})
-        .limit(config.get("limitTownList"))
-        .toArray();
-      const townsWithoutId = towns.map(TownMapper.mapTownDaoToTown);
+    const db = await this.dataAccess.connect();
 
-      return townsWithoutId;
-    } finally {
-      this.close();
-    }
+    return new Promise<ITown[]>((resolve, reject) => {
+      db.all<ITown>(query, (err, rows) => {
+        this.close();
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
   }
 }

@@ -1,9 +1,8 @@
-import { WithId } from "mongodb";
 import { IPostalCodeFromService } from "../../types/postalCodeTypes";
 import { ICategoryTowns, ITown } from "../../types/townTypes";
 
 export const mapPostalCodeFromServiceToTownDocument = (
-  town: IPostalCodeFromService,
+  town: IPostalCodeFromService
 ): ITown => ({
   codePostal: town.codePostal,
   codeCommune: town.codeCommune,
@@ -11,7 +10,7 @@ export const mapPostalCodeFromServiceToTownDocument = (
   libelleAcheminement: town.libelleAcheminement,
 });
 
-export const mapTownDaoToTown = (townDao: WithId<ITown>): ITown => ({
+export const mapTownDaoToTown = (townDao: ITown): ITown => ({
   codeCommune: townDao.codeCommune,
   codePostal: townDao.codePostal,
   nomCommune: townDao.nomCommune,
@@ -34,6 +33,6 @@ export const mapTownsByCategoriesTowns = (towns: ITown[]): ICategoryTowns => {
     {
       metropole: [],
       domtom: [],
-    },
+    }
   );
 };

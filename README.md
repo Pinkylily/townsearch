@@ -33,8 +33,8 @@ d’argumenter pourquoi avoir choisi cet élément plutôt que les autres :
 # Lancement du projet
 
 1. Récupérer le contenu du répo
-2. Faire un `npm install` à la racine, puis dans client et dans server
-3. Créer une connexion mongodb avec une table towns, changer la config dans `config.ts` si besoin
+2. Faire un `npm install` à la racine, puis dans client et dans server$
+3. Faire un `npm run init-db` pour initialiser la database
 4. Faire `npm run build` à la racine (c'est un peu long c'est un point d'amélioration)
 5. Faire `npm run start:server` à la racine
 6. Faire en parallèle `npm run start:client`
