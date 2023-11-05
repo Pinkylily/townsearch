@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
-import { debounce } from "lodash";
+import { debounce } from "lodash-es";
 
 import "./searchBar.css";
 

@@ -63,8 +63,8 @@ export class TownRepository {
     const query = `
             SELECT * FROM Towns
             WHERE nomCommune LIKE '%' || ? || '%' OR codePostal LIKE ? || '%'
-            LIMIT ?
-            ORDER BY nomCommune`;
+            ORDER BY nomCommune
+            LIMIT ?`;
 
     return new Promise<ITown[]>((resolve, reject) => {
       db.all<ITown>(
