@@ -33,16 +33,18 @@ d’argumenter pourquoi avoir choisi cet élément plutôt que les autres :
 # Lancement du projet
 
 1. Récupérer le contenu du répo
-2. Faire un `npm install` à la racine, puis dans client et dans server$
+2. Faire un `npm install` dans client et dans server
 3. Faire un `npm run init-db` pour initialiser la database
-4. Faire `npm run start:server` à la racine
-5. Faire en parallèle `npm run start:client`
+4. Faire `npm run start` dans server
+5. Faire en parallèle `npm run start` dans client
 
 NB: l'url pour appeler le back depuis le front est en dur, c'est un gros point d'amélioration que j'aurais aimer corriger avec + de temps (à minima faire un fichier de configuration). Le projet ne lance pas en même temps le back et le front c'est aussi un point d'amélioration.
 
 # TODO
 
-- Error handling côté front (et double espace)
+- Error handling côté front*
+- React query
 - Offline page côté front 
 - Config front
-- lancement du projet à la racine en une commande 
+- Versionning bdd 
+- test back et front

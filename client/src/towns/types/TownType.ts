@@ -1,4 +1,5 @@
 export interface ITown {
+  id: string;
   codePostal: string;
   nomCommune: string;
 }

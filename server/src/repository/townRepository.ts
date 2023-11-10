@@ -1,5 +1,5 @@
 import { DataAccess } from "../service/dataAccess";
-import { ITown } from "../types/townTypes";
+import { ITown, ITownDao, ITownDocument } from "../types/townTypes";
 import config from "../config/config";
 import * as TownMapper from "../utils/mapper/townMapper";
 
@@ -39,7 +39,7 @@ export class TownRepository {
     }
   }
 
-  public async createAllTowns(towns: ITown[]): Promise<void> {
+  public async createAllTowns(towns: ITownDocument[]): Promise<void> {
     try {
       const queryInsert = `INSERT INTO Towns (codePostal, codeCommune, nomCommune, libelleAcheminement ) VALUES ${towns.map(
         ({ codePostal, codeCommune, nomCommune, libelleAcheminement }) =>
@@ -67,7 +67,7 @@ export class TownRepository {
             LIMIT ?`;
 
     return new Promise<ITown[]>((resolve, reject) => {
-      db.all<ITown>(
+      db.all<ITownDao>(
         query,
         [search, search, config.get("limitTownList")],
         (err, rows) => {
@@ -83,17 +83,17 @@ export class TownRepository {
   }
 
   public async getAllTowns(): Promise<ITown[]> {
-    const query = "SELECT * FROM Towns ORDER BY nomCommune";
+    const query = "SELECT * FROM Towns ORDER BY nomCommune LIMIT ?";
 
     const db = await this.dataAccess.connect();
 
     return new Promise<ITown[]>((resolve, reject) => {
-      db.all<ITown>(query, (err, rows) => {
+      db.all<ITownDao>(query, [config.get("limitTownList")], (err, rows) => {
         this.close();
         if (err) {
           reject(err);
         } else {
-          resolve(rows);
+          resolve(rows.map(TownMapper.mapTownDaoToTown));
         }
       });
     });

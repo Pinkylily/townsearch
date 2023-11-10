@@ -1,8 +1,8 @@
-import React from "react";
 import { Provider } from "react-redux";
-import store from "./state/Store";
+import { createRoot } from "react-dom/client";
+
 import MainDisplay from "./mainDisplay/MainDisplay";
-import { createRoot } from "react-dom";
+import store from "./state/Store";
 
 const App = () => {
   return (

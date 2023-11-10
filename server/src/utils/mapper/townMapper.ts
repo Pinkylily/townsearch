@@ -1,20 +1,19 @@
 import { IPostalCodeFromService } from "../../types/postalCodeTypes";
-import { ICategoryTowns, ITown } from "../../types/townTypes";
+import { ICategoryTowns, ITown, ITownDao, ITownDocument } from "../../types/townTypes";
 
 export const mapPostalCodeFromServiceToTownDocument = (
   town: IPostalCodeFromService
-): ITown => ({
+): ITownDocument => ({
   codePostal: town.codePostal,
   codeCommune: town.codeCommune,
   nomCommune: town.nomCommune,
   libelleAcheminement: town.libelleAcheminement,
 });
 
-export const mapTownDaoToTown = (townDao: ITown): ITown => ({
-  codeCommune: townDao.codeCommune,
+export const mapTownDaoToTown = (townDao: ITownDao): ITown => ({
+  id: townDao.TOWN_ID,
   codePostal: townDao.codePostal,
   nomCommune: townDao.nomCommune,
-  libelleAcheminement: townDao.libelleAcheminement,
 });
 
 export const mapTownsByCategoriesTowns = (towns: ITown[]): ICategoryTowns => {

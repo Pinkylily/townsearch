@@ -1,4 +1,3 @@
-import { IGlobalState } from "../../state/StoreTypes";
 import { ITownActions, ITownState, TOWN_ACTION_TYPE } from "../types/TownType";
 
 export const defaultTownState: ITownState = {
@@ -9,7 +8,7 @@ export const defaultTownState: ITownState = {
 };
 
 const TownReducer = (
-  state: IGlobalState = defaultTownState,
+  state: ITownState = defaultTownState,
   action: ITownActions
 ) => {
   if (action.type === TOWN_ACTION_TYPE.ADD_ALL_CATEGORIES) {

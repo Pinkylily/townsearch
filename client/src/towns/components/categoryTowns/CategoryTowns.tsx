@@ -28,7 +28,7 @@ const CategoryTowns: React.FC<ICategoryTownsProps> = ({
       <TownMessageCard nbTowns={towns.length} />
       <div className="categoryTowns__list">
         {towns.map((town) => (
-          <TownCard town={town} />
+          <TownCard key={`${town.id}}`} town={town} />
         ))}
       </div>
     </div>
