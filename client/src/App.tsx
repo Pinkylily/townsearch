@@ -3,12 +3,23 @@ import { createRoot } from "react-dom/client";
 
 import MainDisplay from "./mainDisplay/MainDisplay";
 import store from "./state/Store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <MainDisplay />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <MainDisplay />
+      </Provider>
+    </QueryClientProvider>
   );
 };
 

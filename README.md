@@ -38,13 +38,16 @@ d’argumenter pourquoi avoir choisi cet élément plutôt que les autres :
 4. Faire `npm run start` dans server
 5. Faire en parallèle `npm run start` dans client
 
-NB: l'url pour appeler le back depuis le front est en dur, c'est un gros point d'amélioration que j'aurais aimer corriger avec + de temps (à minima faire un fichier de configuration). Le projet ne lance pas en même temps le back et le front c'est aussi un point d'amélioration.
+# Commentaires
+
+Dans le client on utilise `useCallback` avec une fonction de debounced, il aurait été possible d'utiliser plutôt le last patern ref pour mettre à jour la référence de la fonction `debouncedSearch` uniquement quand nécessaire.
+
+A noter que sans `useCallback` ou last pattern ref, `debouncedSearch` se met à jour à chaque rendu et donc on perd l'intérêt du debounced.
 
 # TODO
 
-- Error handling côté front*
-- React query
-- Offline page côté front 
+- Error handling côté front
+- Offline page côté front
 - Config front
-- Versionning bdd 
+- Versionning bdd
 - test back et front

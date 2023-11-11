@@ -10,6 +10,7 @@ interface ISearchBarProps {
 
 const SearchBar: React.FC<ISearchBarProps> = ({ onSearch }) => {
   const [search, setSearch] = useState<string>("");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((query: string) => {
       onSearch(query);
