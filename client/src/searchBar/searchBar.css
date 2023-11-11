@@ -1,9 +1,10 @@
 .searchBar{
     display: flex;
-    height: 80px;
     margin: 30px 30px;
     border-radius: 10px;
     background-color: #D2E5E9;
+    flex-direction: column;
+    padding: 20px 25px;
 }
 
 .searchBar__label {
@@ -22,7 +23,6 @@
     flex-direction: row;
     width: 100%;
     align-items: center;
-    padding: 20px 25px;
 }
 
 .searchBar__input {
@@ -40,4 +40,16 @@
     line-height: 37px;
     letter-spacing: 0em;
     text-align: left;
+}
+
+.searchBar__error {
+    background-color: #bb3737a1;
+    font-family: Montserrat;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    color: #fff;
+    margin-top: 10px;
+    padding: 15px;
 }

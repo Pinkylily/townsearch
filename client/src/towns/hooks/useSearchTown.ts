@@ -4,7 +4,7 @@ import { findCategoriesTownsByQuery } from "../api/TownApi";
 import { addAllCategoriesTown } from "../state/TownActions";
 import { useEffect, useState } from "react";
 
-export const useSearchTown = () => {
+export const useSearchTown = (): [(q: string) => void, hasError: boolean] => {
   const [query, setQuery] = useState<string>();
 
   const dispatch = useDispatch();
@@ -18,5 +18,5 @@ export const useSearchTown = () => {
     result.data && dispatch(addAllCategoriesTown(result.data));
   }, [dispatch, result.data]);
 
-  return [setQuery];
+  return [setQuery, result.isError];
 };

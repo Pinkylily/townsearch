@@ -6,9 +6,10 @@ import "./searchBar.css";
 
 interface ISearchBarProps {
   onSearch(s: string): void;
+  hasError?: boolean;
 }
 
-const SearchBar: React.FC<ISearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC<ISearchBarProps> = ({ onSearch, hasError }) => {
   const [search, setSearch] = useState<string>("");
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
@@ -40,6 +41,7 @@ const SearchBar: React.FC<ISearchBarProps> = ({ onSearch }) => {
           placeholder="...une ville, un code postal"
         />
       </label>
+      {hasError && <div className="searchBar__error"><span>Une erreur est survenue</span></div>}
     </div>
   );
 };
