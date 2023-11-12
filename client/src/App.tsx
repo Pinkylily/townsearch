@@ -8,6 +8,8 @@ import SearchBarContainer from "./searchBar/SearchBarContainer";
 import { ErrorBoundary } from "react-error-boundary";
 import FallbackOnError from "./fallbackOnError/FallbackOnError";
 
+import "./app.css";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

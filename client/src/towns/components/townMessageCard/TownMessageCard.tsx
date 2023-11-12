@@ -1,8 +1,6 @@
 import classNames from "classnames";
 import React from "react";
 
-import "./townMessageCard.css";
-
 interface ITownMessageCardProps {
   nbTowns: number;
 }
@@ -14,13 +12,19 @@ const TownMessageCard: React.FC<ITownMessageCardProps> = ({ nbTowns }) => {
     return `${nbTowns} villes correspondant au texte saisi`;
   };
 
+  const empty = nbTowns === 0;
+
   return (
     <div
-      className={classNames("townMessageCard", {
-        "townMessageCard--empty": nbTowns === 0,
-      })}
+      className={classNames(
+        "flex w-full items-center",
+        { "bg-error": empty },
+        { "bg-success": !empty },
+      )}
     >
-      <span className="townMessageCard__label">{getText()}</span>
+      <span className="label-small py-5 pl-7 text-center text-white">
+        {getText()}
+      </span>
     </div>
   );
 };

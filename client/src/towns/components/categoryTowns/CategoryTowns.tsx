@@ -4,8 +4,6 @@ import TownCard from "../townCard/TownCard";
 import { ICategoryTownsId, ITown } from "../../types/TownType";
 import TownMessageCard from "../townMessageCard/TownMessageCard";
 
-import "./categoryTowns.css";
-
 interface ICategoryTownsProps {
   categoryName: ICategoryTownsId;
   towns: ITown[];
@@ -21,12 +19,12 @@ const CategoryTowns: React.FC<ICategoryTownsProps> = ({
   towns,
 }) => {
   return (
-    <div className="categoryTowns">
-      <div className="categoryTowns__title">
+    <div className="bg-normal m-8 flex flex-1 flex-col items-center rounded-xl p-9">
+      <div className="label-normal mb-3 flex whitespace-nowrap text-center text-black">
         <h1>{CATEGORY_TITLE[categoryName]}</h1>
       </div>
       <TownMessageCard nbTowns={towns.length} />
-      <div className="categoryTowns__list">
+      <div className="flex w-full flex-wrap justify-between">
         {towns.map((town) => (
           <TownCard key={`${town.id}}`} town={town} />
         ))}

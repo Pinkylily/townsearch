@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .label-normal {
+        font-family: Montserrat;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 37px;
+        letter-spacing: 0em;
+    }
+
+    .label-small {
+        font-family: Montserrat;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 18px;
+    }
+    
+    .bg-error {
+        background-color: #bb3737a1;
+    }
+    
+    .bg-success {
+        background-color: #39bb37a1; 
+    }
+    
+    .bg-normal {
+        background-color: #D2E5E9;
+    }
+    
+    .bg-input {
+        background-color: #F0FCFF;
+    }
+}
+

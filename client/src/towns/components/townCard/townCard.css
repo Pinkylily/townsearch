@@ -2,21 +2,6 @@
   font-family: "Montserrat";
   font-weight: 700;
   background: #161c29a1;
-  height: 60px;
-  width: 280px;
-  margin-top: 25px;
-}
-
-.townCard__wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-}
-
-.townCard__title {
-  color: #fff;
-  white-space: nowrap;
 }
 
 .townCard__label {

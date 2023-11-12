@@ -2,8 +2,6 @@ import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { debounce } from "lodash-es";
 
-import "./searchBar.css";
-
 interface ISearchBarProps {
   onSearch(s: string): void;
   hasError?: boolean;
@@ -16,7 +14,7 @@ const SearchBar: React.FC<ISearchBarProps> = ({ onSearch, hasError }) => {
     debounce((query: string) => {
       onSearch(query);
     }, 500),
-    [onSearch]
+    [onSearch],
   );
 
   useEffect(() => {
@@ -29,11 +27,13 @@ const SearchBar: React.FC<ISearchBarProps> = ({ onSearch, hasError }) => {
   };
 
   return (
-    <div className="searchBar">
-      <label className="searchBar__content">
-        <span className="searchBar__label">Je recherche...</span>
+    <div className="bg-normal m-8 flex flex-col rounded-xl px-7 py-5">
+      <label className="flex w-full flex-row items-center">
+        <span className="label-normal whitespace-nowrap text-left text-black">
+          Je recherche...
+        </span>
         <input
-          className="searchBar__input"
+          className="bg-input label-normal ml-3 h-10 w-full rounded-xl border-none pl-8 text-left"
           name="searchBar"
           type="search"
           value={search}
@@ -41,7 +41,11 @@ const SearchBar: React.FC<ISearchBarProps> = ({ onSearch, hasError }) => {
           placeholder="...une ville, un code postal"
         />
       </label>
-      {hasError && <div className="searchBar__error"><span>Une erreur est survenue</span></div>}
+      {hasError ? (
+        <div className="bg-error label-small mt-3 p-4 text-center text-white">
+          <span>Une erreur est survenue</span>
+        </div>
+      ) : null}
     </div>
   );
 };

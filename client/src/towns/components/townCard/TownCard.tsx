@@ -9,9 +9,9 @@ interface ITownCardProps {
 
 const TownCard: React.FC<ITownCardProps> = ({ town }) => {
   return (
-    <div className="townCard">
-      <div className="townCard__wrapper">
-        <span className="townCard__title">{town.nomCommune}</span>
+    <div className="townCard mt-6 w-64">
+      <div className="flex items-center justify-between p-4">
+        <span className="whitespace-nowrap text-white">{town.nomCommune}</span>
         <span className="townCard__label">{town.codePostal}</span>
       </div>
     </div>
