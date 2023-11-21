@@ -15,12 +15,7 @@ const CategoriesTownsContainer: React.FC<ICategoryTownsContainerProps> = () => {
   const { categoryTowns } = useSelector<
     IGlobalState,
     ICategoryTownsContainerPropsFromRedux
-  >(
-    (state) => ({
-      categoryTowns: state.town.categoryTowns,
-    }),
-    shallowEqual
-  );
+  >((state) => ({ categoryTowns: state.categoryTowns }), shallowEqual);
 
   return <CategoriesTowns categoryTowns={categoryTowns} />;
 };

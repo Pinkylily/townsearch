@@ -1,23 +1,21 @@
-import { ITownActions, ITownState, TOWN_ACTION_TYPE } from "../types/TownType";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ICategoryTowns, ITownState } from "../types/TownType";
 
-export const defaultTownState: ITownState = {
-  categoryTowns: {
-    metropole: [],
-    domtom: [],
+const initialState: ITownState = {
+  metropole: [],
+  domtom: [],
+};
+
+const TownSlice = createSlice({
+  name: "categoryTowns",
+  initialState: initialState,
+  reducers: {
+    addAllCategories: (state, action: PayloadAction<ICategoryTowns>) => {
+      return action.payload;
+    },
   },
-};
+});
 
-const TownReducer = (
-  state: ITownState = defaultTownState,
-  action: ITownActions
-) => {
-  if (action.type === TOWN_ACTION_TYPE.ADD_ALL_CATEGORIES) {
-    return {
-      ...state,
-      categoryTowns: action.categoryTowns,
-    };
-  }
-  return state;
-};
+export const { addAllCategories } = TownSlice.actions;
 
-export default TownReducer;
+export default TownSlice.reducer;

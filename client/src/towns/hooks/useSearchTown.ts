@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
-import { findCategoriesTownsByQuery } from "../api/TownApi";
-import { addAllCategoriesTown } from "../state/TownActions";
+import { findCategoriesTowns } from "../api/TownApi";
 import { useEffect, useState } from "react";
+import { addAllCategories } from "../state/TownReducer";
 
 export const useSearchTown = (): [(q: string) => void, hasError: boolean] => {
   const [query, setQuery] = useState<string>();
@@ -11,11 +11,11 @@ export const useSearchTown = (): [(q: string) => void, hasError: boolean] => {
 
   const result = useQuery({
     queryKey: ["categoryTowns", query],
-    queryFn: () => findCategoriesTownsByQuery(query),
+    queryFn: findCategoriesTowns,
   });
 
   useEffect(() => {
-    result.data && dispatch(addAllCategoriesTown(result.data));
+    result?.data && dispatch(addAllCategories(result.data));
   }, [dispatch, result.data]);
 
   return [setQuery, result.isError];

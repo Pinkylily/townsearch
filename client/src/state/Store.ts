@@ -1,14 +1,9 @@
-import { defaultTownState } from "../towns/state/TownReducer";
-import RootReducer from "./RootReducer";
+import TownReducer from "../towns/state/TownReducer";
+
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
-  reducer: RootReducer,
-  preloadedState: {
-    town: {
-      ...defaultTownState,
-    },
-  },
+  reducer: { categoryTowns: TownReducer },
 });
 
 export default store;
